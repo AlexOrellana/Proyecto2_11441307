@@ -35,7 +35,7 @@ int main(int argc, char* argv[]){
 	initscr();
 	(void)echo();
 	srand(time(NULL));
-	string name;
+	string name="";
 	char nombre[1000]; 
 	char* temp= new char[200];//pasar string a char
 	Luchadores* player;
@@ -57,22 +57,26 @@ int main(int argc, char* argv[]){
 
 		///////////cargar
 		ifstream traer2("vida.txt");
-		while(!traer.eof()){
-			traer>>vida;
+		while(!traer2.eof()){
+			traer2>>vida;
 		}
 		traer2.close();
 
 		///////////cargar
 		ifstream traer3("nombre.txt");
-		while(!traer.eof()){
-			traer>>name;
+		while(!traer3.eof()){
+			traer3>>nombre;
 		}
 		traer3.close();
 
+		name = string(nombre);
+		refresh();
+
+
 		///////////cargar
 		ifstream traer4("opc.txt");
-		while(!traer.eof()){
-			traer>>opc;
+		while(!traer4.eof()){
+			traer4>>opc;
 		}
 		traer4.close();
 
@@ -82,6 +86,7 @@ int main(int argc, char* argv[]){
 		Priest priest(vida,0,dinero,"BOT");
 		Tirador tirador(vida,0,dinero,"BOT",30);
 		Espadachin espadachin(vida,0,dinero,"BOT");
+		clear();
 		//crear player
 		if (opc==1)
 		{
@@ -124,6 +129,384 @@ int main(int argc, char* argv[]){
 			espadachin.Cambiar_nombre(name);
 			player=&espadachin;
 		}
+		clear();
+		//interface
+		while(opcion!=4){
+			opcion=menu_principal();
+			if (opcion==1)//pelear
+			{
+				//dibujar player
+				move(29,5);	
+				printw("TU");
+				move(30,5);	
+				strcpy(temp, player->toString().c_str());
+				printw(temp);
+				dibujar_clase(opc,32,5);
+
+				//elejir y dibujar enemigo
+				Mago BOT1(500,0,500,"BOT",10);
+				Melee BOT2(500,0,500,"BOT");
+				Priest BOT3(500,0,500,"BOT");
+				Tirador BOT4(500,0,500,"BOT",30);
+				Espadachin BOT5(500,0,500,"BOT");
+
+				int  enemy=rand()%5+1;
+
+				move(4,80);	
+				printw("ENEMIGO");
+				if (enemy==1)
+				{
+					//dibujar enemigo
+					move(5,80);	
+					strcpy(temp, BOT1.toString().c_str());
+					printw(temp);
+					dibujar_clase(1,7,80);
+
+					while(BOT1.GetVida()>0 && player->GetVida()>0){
+						clear();
+						//dibujar player
+						move(29,5);	
+						printw("TU");
+						move(30,5);	
+						strcpy(temp, player->toString().c_str());
+						printw(temp);
+						dibujar_clase(opc,32,5);
+						//dibujar enemy
+						move(5,80);	
+						strcpy(temp, BOT1.toString().c_str());
+						printw(temp);
+						dibujar_clase(1,7,80);
+
+						int  enemy_ataque=rand()%4+1;
+
+						BOT1.herir(player->ataquar(menu_atacar(opc)));
+						player->herir(BOT1.ataquar(enemy_ataque));
+
+						clear();
+						//dibujar player
+						move(29,5);	
+						printw("TU");
+						move(30,5);	
+						strcpy(temp, player->toString().c_str());
+						printw(temp);
+						dibujar_clase(opc,32,5);
+						//dibujar enemy
+						move(5,80);	
+						strcpy(temp, BOT1.toString().c_str());
+						printw(temp);
+						dibujar_clase(1,7,80);
+					}	
+
+					if (BOT1.GetVida()<player->GetVida())
+					{
+						clear();
+						move(15,30);
+						printw("Ganaste [cada ves que ganas te dan dinero]--recuerda ir a la tienda a curarte");
+						player->WinMoney();
+						getch();
+					}else{
+						clear();
+						move(15,30);
+						printw("GAME OVER");
+						opcion=4;
+						getch();
+					}
+				}else if (enemy==2)
+				{
+					move(5,80);	
+					strcpy(temp, BOT2.toString().c_str());
+					printw(temp);
+					dibujar_clase(2,7,80);
+
+					while(BOT2.GetVida()>0 && player->GetVida()>0){
+						clear();
+						//dibujar player
+						move(29,5);	
+						printw("TU");
+						move(30,5);	
+						strcpy(temp, player->toString().c_str());
+						printw(temp);
+						dibujar_clase(opc,32,5);
+						//dibujar enemy
+						move(5,80);	
+						strcpy(temp, BOT2.toString().c_str());
+						printw(temp);
+						dibujar_clase(2,7,80);
+
+						int  enemy_ataque=rand()%4+1;
+
+						BOT2.herir(player->ataquar(menu_atacar(opc)));
+						player->herir(BOT2.ataquar(enemy_ataque));
+
+						clear();
+						//dibujar player
+						move(29,5);	
+						printw("TU");
+						move(30,5);	
+						strcpy(temp, player->toString().c_str());
+						printw(temp);
+						dibujar_clase(opc,32,5);
+						//dibujar enemy
+						move(5,80);	
+						strcpy(temp, BOT2.toString().c_str());
+						printw(temp);
+						dibujar_clase(2,7,80);
+					}
+					if (BOT2.GetVida()<player->GetVida())
+					{
+						clear();
+						move(15,30);
+						printw("Ganaste [cada ves que ganas te dan dinero]--recuerda ir a la tienda a curarte");
+						player->WinMoney();
+						getch();
+					}else{
+						clear();
+						move(15,30);
+						printw("GAME OVER");
+						opcion=4;
+						getch();
+					}
+				}else if (enemy==3)
+				{
+					move(5,80);	
+					strcpy(temp, BOT3.toString().c_str());
+					printw(temp);
+					dibujar_clase(3,7,80);
+
+					while(BOT3.GetVida()>0 && player->GetVida()>0){
+						clear();
+						//dibujar player
+						move(29,5);	
+						printw("TU");
+						move(30,5);	
+						strcpy(temp, player->toString().c_str());
+						printw(temp);
+						dibujar_clase(opc,32,5);
+						//dibujar enemy
+						move(5,80);	
+						strcpy(temp, BOT3.toString().c_str());
+						printw(temp);
+						dibujar_clase(3,7,80);
+
+						int  enemy_ataque=rand()%4+1;
+
+						BOT3.herir(player->ataquar(menu_atacar(opc)));
+						player->herir(BOT3.ataquar(enemy_ataque));
+
+						clear();
+						//dibujar player
+						move(29,5);	
+						printw("TU");
+						move(30,5);	
+						strcpy(temp, player->toString().c_str());
+						printw(temp);
+						dibujar_clase(opc,32,5);
+						//dibujar enemy
+						move(5,80);	
+						strcpy(temp, BOT3.toString().c_str());
+						printw(temp);
+						dibujar_clase(3,7,80);
+					}
+					if (BOT3.GetVida()<player->GetVida())
+					{
+						clear();
+						move(15,30);
+						printw("Ganaste [cada ves que ganas te dan dinero]--recuerda ir a la tienda a curarte");
+						player->WinMoney();
+						getch();
+					}else{
+						clear();
+						move(15,30);
+						printw("GAME OVER");
+						opcion=4;
+						getch();
+					}
+				}else if (enemy==4)
+				{
+					move(5,80);	
+					strcpy(temp, BOT4.toString().c_str());
+					printw(temp);
+					dibujar_clase(4,7,80);
+
+					while(BOT4.GetVida()>0 && player->GetVida()>0){
+						clear();
+						//dibujar player
+						move(29,5);	
+						printw("TU");
+						move(30,5);	
+						strcpy(temp, player->toString().c_str());
+						printw(temp);
+						dibujar_clase(opc,32,5);
+						//dibujar enemy
+						move(5,80);	
+						strcpy(temp, BOT4.toString().c_str());
+						printw(temp);
+						dibujar_clase(4,7,80);
+
+						int  enemy_ataque=rand()%4+1;
+
+						BOT4.herir(player->ataquar(menu_atacar(opc)));
+						player->herir(BOT4.ataquar(enemy_ataque));
+
+						clear();
+						//dibujar player
+						move(29,5);	
+						printw("TU");
+						move(30,5);	
+						strcpy(temp, player->toString().c_str());
+						printw(temp);
+						dibujar_clase(opc,32,5);
+						//dibujar enemy
+						move(5,80);	
+						strcpy(temp, BOT4.toString().c_str());
+						printw(temp);
+						dibujar_clase(4,7,80);
+					}
+					if (BOT4.GetVida()<player->GetVida())
+					{
+						clear();
+						move(15,30);
+						printw("Ganaste [cada ves que ganas te dan dinero]--recuerda ir a la tienda a curarte");
+						player->WinMoney();
+						getch();
+					}else{
+						clear();
+						move(15,30);
+						printw("GAME OVER");
+						opcion=4;
+						getch();
+					}
+				}else if (enemy==5)
+				{
+					move(5,80);	
+					strcpy(temp, BOT5.toString().c_str());
+					printw(temp);
+					dibujar_clase(5,7,80);
+
+					while(BOT5.GetVida()>0 && player->GetVida()>0){
+						clear();
+						//dibujar player
+						move(29,5);	
+						printw("TU");
+						move(30,5);	
+						strcpy(temp, player->toString().c_str());
+						printw(temp);
+						dibujar_clase(opc,32,5);
+						//dibujar enemy
+						move(5,80);	
+						strcpy(temp, BOT5.toString().c_str());
+						printw(temp);
+						dibujar_clase(5,7,80);
+
+						int  enemy_ataque=rand()%4+1;
+
+						BOT5.herir(player->ataquar(menu_atacar(opc)));
+						player->herir(BOT5.ataquar(enemy_ataque));
+
+						clear();
+						//dibujar player
+						move(29,5);	
+						printw("TU");
+						move(30,5);	
+						strcpy(temp, player->toString().c_str());
+						printw(temp);
+						dibujar_clase(opc,32,5);
+						//dibujar enemy
+						move(5,80);	
+						strcpy(temp, BOT5.toString().c_str());
+						printw(temp);
+						dibujar_clase(5,7,80);
+					}
+					if (BOT5.GetVida()<player->GetVida())
+					{
+						clear();
+						move(15,30);
+						printw("Ganaste [cada ves que ganas te dan dinero]--recuerda ir a la tienda a curarte");
+						player->WinMoney();
+						getch();
+					}else{
+						clear();
+						move(15,30);
+						printw("GAME OVER");
+						opcion=4;
+						getch();
+					}
+				}
+				getch();
+			}else if (opcion==2)//tienda
+			{
+				int opcion_tienda=0;
+				while(opcion_tienda!=3){
+					opcion_tienda=menu_tienda();
+					if (opcion_tienda==1 && player->GetMoney()>=200)
+					{
+						player->UseMoney(200);
+						for (int i = 0; i < 50; ++i)
+						{
+							player->LevelUp(2);
+						}
+					}else if (opcion_tienda==2 && player->GetMoney()>=300)
+					{
+						player->UseMoney(200);
+						for (int i = 0; i < 20; ++i)
+						{
+							player->LevelUp(1);
+						}
+					}else{
+						if (opcion_tienda!=3)
+						{
+							clear();
+							move(15,50);
+							printw("Dinero insuficiente");
+							getch();
+						}
+					}
+				}	
+			}else if (opcion==3)//info de player
+			{
+				move(15,50);	
+				strcpy(temp, player->toString().c_str());
+				printw(temp);
+				getch();
+			}else if (opcion==4)
+			{
+				clear();
+				move(18,60);
+				printw("Desea guardar[s/n]: ");
+				refresh();
+				cargar = getch();
+				if(cargar=='s'||cargar=='S'){
+				//guardar partidas
+				int guardar;
+				string save;
+
+				guardar = player->GetMoney();
+
+				ofstream escribir("dinero.txt");
+				escribir  << guardar; 
+				escribir.close();	
+
+				guardar = player->GetVida();
+
+				ofstream escribir2("vida.txt");
+				escribir2  << guardar; 
+				escribir.close();
+
+				save = player->GetNombre();
+
+				ofstream escribir3("nombre.txt");
+				escribir3  << save; 
+				escribir.close();	
+
+				guardar = opc;
+
+				ofstream escribir4("opc.txt");
+				escribir4  << guardar; 
+				escribir.close();
+				}
+				getch();
+			}
+		}	
 	}else{
 
 		Mago mago(500,0,500,"BOT",10);
@@ -287,7 +670,7 @@ int main(int argc, char* argv[]){
 						move(5,80);	
 						strcpy(temp, BOT2.toString().c_str());
 						printw(temp);
-						dibujar_clase(1,7,80);
+						dibujar_clase(2,7,80);
 
 						int  enemy_ataque=rand()%4+1;
 
@@ -306,7 +689,7 @@ int main(int argc, char* argv[]){
 						move(5,80);	
 						strcpy(temp, BOT2.toString().c_str());
 						printw(temp);
-						dibujar_clase(1,7,80);
+						dibujar_clase(2,7,80);
 					}
 					if (BOT2.GetVida()<player->GetVida())
 					{
@@ -342,7 +725,7 @@ int main(int argc, char* argv[]){
 						move(5,80);	
 						strcpy(temp, BOT3.toString().c_str());
 						printw(temp);
-						dibujar_clase(1,7,80);
+						dibujar_clase(3,7,80);
 
 						int  enemy_ataque=rand()%4+1;
 
@@ -361,7 +744,7 @@ int main(int argc, char* argv[]){
 						move(5,80);	
 						strcpy(temp, BOT3.toString().c_str());
 						printw(temp);
-						dibujar_clase(1,7,80);
+						dibujar_clase(3,7,80);
 					}
 					if (BOT3.GetVida()<player->GetVida())
 					{
@@ -397,7 +780,7 @@ int main(int argc, char* argv[]){
 						move(5,80);	
 						strcpy(temp, BOT4.toString().c_str());
 						printw(temp);
-						dibujar_clase(1,7,80);
+						dibujar_clase(4,7,80);
 
 						int  enemy_ataque=rand()%4+1;
 
@@ -416,7 +799,7 @@ int main(int argc, char* argv[]){
 						move(5,80);	
 						strcpy(temp, BOT4.toString().c_str());
 						printw(temp);
-						dibujar_clase(1,7,80);
+						dibujar_clase(4,7,80);
 					}
 					if (BOT4.GetVida()<player->GetVida())
 					{
@@ -452,7 +835,7 @@ int main(int argc, char* argv[]){
 						move(5,80);	
 						strcpy(temp, BOT5.toString().c_str());
 						printw(temp);
-						dibujar_clase(1,7,80);
+						dibujar_clase(5,7,80);
 
 						int  enemy_ataque=rand()%4+1;
 
@@ -471,7 +854,7 @@ int main(int argc, char* argv[]){
 						move(5,80);	
 						strcpy(temp, BOT5.toString().c_str());
 						printw(temp);
-						dibujar_clase(1,7,80);
+						dibujar_clase(5,7,80);
 					}
 					if (BOT5.GetVida()<player->GetVida())
 					{
@@ -524,46 +907,48 @@ int main(int argc, char* argv[]){
 				strcpy(temp, player->toString().c_str());
 				printw(temp);
 				getch();
+			}else if (opcion==4)
+			{
+				clear();
+				move(18,60);
+				printw("Desea guardar[s/n]: ");
+				refresh();
+				cargar = getch();
+				if(cargar=='s'||cargar=='S'){
+				//guardar partidas
+				int guardar;
+				string save;
+
+				guardar = player->GetMoney();
+
+				ofstream escribir("dinero.txt");
+				escribir  << guardar; 
+				escribir.close();	
+
+				guardar = player->GetVida();
+
+				ofstream escribir2("vida.txt");
+				escribir2  << guardar; 
+				escribir.close();
+
+				save = player->GetNombre();
+
+				ofstream escribir3("nombre.txt");
+				escribir3  << save; 
+				escribir.close();	
+
+				guardar = opc;
+
+				ofstream escribir4("opc.txt");
+				escribir4  << guardar; 
+				escribir.close();
+				}
+				getch();
 			}
-	}	
+		}	
 	}
 	clear();
-	move(18,60);
-	printw("Desea guardar[s/n]: ");
-	refresh();
-	cargar = getch();
-	if(cargar=='s'||cargar=='S'){
-		//guardar partidas
-		int guardar;
-		string save;
-
-		guardar = player->GetMoney();
-
-		ofstream escribir("dinero.txt");
-		escribir  << guardar; 
-		escribir.close();	
-
-		guardar = player->GetVida();
-
-		ofstream escribir2("vida.txt");
-		escribir  << guardar; 
-		escribir.close();
-
-		save = player->GetNombre();
-
-		ofstream escribir3("nombre.txt");
-		escribir  << save; 
-		escribir.close();	
-
-		guardar = opc;
-
-		ofstream escribir4("opc.txt");
-		escribir  << guardar; 
-		escribir.close();
-	}
-	getch();
-	
-
+	endwin();
 	delete temp;
 	return 0;
 }
