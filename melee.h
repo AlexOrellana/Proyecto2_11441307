@@ -16,4 +16,6 @@ class Melee:public Luchadores{
 	void Cambiar_nombre(string);
 	int GetMoney();
 	void WinMoney();
+	int GetVida();
+	string GetNombre();
 };

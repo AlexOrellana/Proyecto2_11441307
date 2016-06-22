@@ -1,6 +1,9 @@
 
 #include "luchadores.h"
 #include "priest.h"
+#include <ctime>
+#include <cstdlib>
+#include <stdio.h>
 #include <string>
 #include <sstream>
 
@@ -14,7 +17,25 @@ Priest::~Priest(){
 
 }
 int Priest::ataquar(int numero){
-
+	srand(time(NULL));
+	int  curar=rand()%2+1;
+	if (numero==1)
+	{
+		return 30+fuerza_base;
+	}else if (numero==2)
+	{
+		return 60+fuerza_base;
+	}else if (numero==3)
+	{
+		return 100+fuerza_base;
+	}else if (numero==4)
+	{
+		if (curar==1)
+		{
+			vida+=50;
+		}
+		return 0+fuerza_base;
+	}
 }
 void Priest::LevelUp(int numero){
 	if (numero==1)
@@ -48,4 +69,10 @@ int Priest::GetMoney(){
 void Priest::WinMoney(){
 	int win=10;
 	money +=10;
+}
+int Priest::GetVida(){
+	return vida;
+}
+string Priest::GetNombre(){
+	return nombre;
 }

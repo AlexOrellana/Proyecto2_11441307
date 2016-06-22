@@ -20,4 +20,6 @@ class Luchadores{
 	virtual string toString()=0;
 	virtual int herir(int)=0;
 	virtual void Cambiar_nombre(string)=0;
+	virtual int GetVida()=0;
+	virtual string GetNombre()=0;
 };

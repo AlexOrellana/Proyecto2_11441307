@@ -14,7 +14,42 @@ Mago::~Mago(){
 
 }
 int Mago::ataquar(int numero){
-
+	if (numero==1)
+	{
+		if (magia-2>=0)
+		{
+			magia-=2;
+			return 30+fuerza_base;
+		}else{
+			return 0+fuerza_base;
+		}		
+	}else if (numero==2)
+	{
+		if (magia-5>=0)
+		{
+			magia-=5;
+			return 60+fuerza_base;
+		}else{
+			return 0+fuerza_base;
+		}	
+	}
+	else if (numero==3)
+	{
+		if (magia-10>=0)
+		{
+			magia-=10;
+			return 100+fuerza_base;
+		}else{
+			return 0+fuerza_base;
+		}	
+	}
+	else if (numero==4)
+	{
+		while(magia<10){
+			magia++;
+		}
+		return 0+fuerza_base;
+	}
 }
 void Mago::LevelUp(int numero){
 	if (numero==1)
@@ -48,4 +83,10 @@ int Mago::GetMoney(){
 void Mago::WinMoney(){
 	int win=10;
 	money +=10;
+}
+int Mago::GetVida(){
+	return vida;
+}
+string Mago::GetNombre(){
+	return nombre;
 }

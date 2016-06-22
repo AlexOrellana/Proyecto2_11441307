@@ -1,6 +1,9 @@
 
 #include "luchadores.h"
 #include "melee.h"
+#include <ctime>
+#include <cstdlib>
+#include <stdio.h>
 #include <string>
 #include <sstream>
 
@@ -14,7 +17,41 @@ Melee::~Melee(){
 
 }
 int Melee::ataquar(int numero){
-
+	srand(time(NULL));
+	int  pegar=rand()%2+1;
+	if (numero==1)
+	{
+		if (pegar==1)
+		{
+			return 50+fuerza_base;
+		}else{
+			return 0+fuerza_base;
+		}
+	}else if (numero==2)
+	{
+		if (pegar==1)
+		{
+			return 100+fuerza_base;
+		}else{
+			return 0+fuerza_base;
+		}
+	}else if (numero==3)
+	{
+		if (pegar==1)
+		{
+			return 150+fuerza_base;
+		}else{
+			return 0+fuerza_base;
+		}
+	}else if (numero==4)
+	{
+		if (pegar==1)
+		{
+			return 200+fuerza_base;
+		}else{
+			return 0+fuerza_base;
+		}
+	}
 }
 void Melee::LevelUp(int numero){
 	if (numero==1)
@@ -48,4 +85,10 @@ int Melee::GetMoney(){
 void Melee::WinMoney(){
 	int win=10;
 	money +=10;
+}
+int Melee::GetVida(){
+	return vida;
+}
+string Melee::GetNombre(){
+	return nombre;
 }

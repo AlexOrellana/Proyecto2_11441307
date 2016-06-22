@@ -14,7 +14,44 @@ Tirador::~Tirador(){
 
 }
 int Tirador::ataquar(int numero){
-
+	if (numero==1)
+	{
+		if (tiros-1>=0)
+		{
+			tiros-=1;
+			return 10+fuerza_base;
+		}else{
+			return 0+fuerza_base;
+		}		
+	}else if (numero==2)
+	{
+		if (tiros-5>=0)
+		{
+			tiros-=5;
+			return 30+fuerza_base;
+		}else{
+			return 0+fuerza_base;
+		}	
+	}
+	else if (numero==3)
+	{
+		if (tiros-10>=0)
+		{
+			tiros-=10;
+			return 100+fuerza_base;
+		}else{
+			return 0+fuerza_base;
+		}	
+	}
+	else if (numero==4)
+	{
+		int recarga=10;
+		while(tiros<30 && recarga>=0){
+			tiros++;
+			recarga--;
+		}
+		return 0+fuerza_base;
+	}
 }
 void Tirador::LevelUp(int numero){
 	if (numero==1)
@@ -48,4 +85,10 @@ int Tirador::GetMoney(){
 void Tirador::WinMoney(){
 	int win=10;
 	money +=10;
+}
+int Tirador::GetVida(){
+	return vida;
+}
+string Tirador::GetNombre(){
+	return nombre;
 }
